@@ -5,6 +5,17 @@ Alternativer Titel: *Being a Cunt about Counts*
 
 ```{r, eval = FALSE}
 count_them <- function(supposedly_a_count) {
+  
+  ## could be of any length! assert input length is 1
+  if (!length(supposedly_a_count) == 1) {
+    stop("Input must be of length 1")
+  }
+  
+  ## could be anything! assert it is numeric
+  if (!checkmate::assert_numeric(supposedly_a_count)) {
+    stop("Input must be numeric!")
+  }
+  
   if (!checkmate::test_count(supposedly_a_count)) {
     warning(
       "rounding ", supposedly_a_count,
@@ -12,7 +23,7 @@ count_them <- function(supposedly_a_count) {
     )
     supposedly_a_count <- round(supposedly_a_count)
   }
-  supposedly_a_count
+  
 }
 ```
 Wirkt harmlos und unscheinbar, oder? Zweck der effektiv drei Befehle hier drüber ist es, `supposedly_a_count` gegebenenfalls (mit einer Warnung) zu 
