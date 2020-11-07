@@ -11,10 +11,24 @@ count_them <- function(supposedly_a_count) {
     stop("Input must be of length 1")
   }
   
-  ## could be anything! assert it is numeric
-  if (!checkmate::assert_numeric(supposedly_a_count)) {
-    stop("Input must be numeric!")
+  ## could be anything! assert it is numeric or integer
+  if (!(is.numeric(supposedly_a_count))) {
+    stop("Input must be numeric or integer!")
   }
+
+  ## could be anything! assert it is numeric or integer
+  if (!(is.numeric(supposedly_a_count))) {
+    stop("Input must be numeric or integer!")
+  } else if (is.na(supposedly_a_count)) {
+    stop("Input must not be NA!")
+  } else if (is.infinite(supposedly_a_count)) {
+    stop("Input needs to be finite!")
+  } else if (supposedly_a_count < 0) {
+    stop("Input needs to be positive.")
+  }
+  
+  ## I intended to work with assert_numeric, but could not make it 
+  ## work with integer inputs.
   
   if (!checkmate::test_count(supposedly_a_count)) {
     warning(
@@ -22,7 +36,15 @@ count_them <- function(supposedly_a_count) {
       " to the nearest integer."
     )
     supposedly_a_count <- round(supposedly_a_count)
+    ## ensure integer type
+    supposedly_a_count <- as.integer(supposedly_a_count)
+  } else {
+
+   supposedly_a_count <- as.integer(supposedly_a_count)
+    
   }
+  
+  return(supposedly_a_count)
   
 }
 ```
